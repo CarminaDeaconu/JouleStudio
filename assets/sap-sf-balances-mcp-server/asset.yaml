@@ -1,0 +1,21 @@
+apiVersion: asset.sap/v1
+kind: Asset
+type: mcp-server
+
+metadata:
+  name: sap-sf-balances-mcp-server
+  description: Exposes SAP SuccessFactors Time Off Balances REST API as MCP tools
+  version: "1.0.0"
+  translation: mcp-translation/translation.json
+  apiSpec: mcp-translation/api-spec.json
+
+requires:
+  - name: Balances
+    kind: api
+    ordId: sap.sf:apiResource:Balances:v1
+
+provides:
+  apis:
+    - name: sap-sf-balances-mcp-server
+      kind: mcp-server
+      ordId: customer.build:apiResource:hr-virtual-agent-9bb77.sap-sf-balances-mcp-server:v1

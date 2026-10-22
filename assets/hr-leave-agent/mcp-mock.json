@@ -1,0 +1,551 @@
+{
+  "servers": {
+    "sap-sf-ectimeoff": {
+      "mcp_server_name": "sap.sf/ECTimeOff",
+      "description": "SAP SuccessFactors Time Off OData service — employee time records and leave accounts",
+      "tools": {
+        "get_metadata_sfodata": {
+          "description": "Get OData service metadata for schema discovery",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entitySets": {"type": "string", "description": "Comma-separated entity set names to filter"},
+              "complexTypes": {"type": "string", "description": "Comma-separated complex type names to filter"}
+            },
+            "required": []
+          },
+          "mock_response": "<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"1.0\" xmlns:edmx=\"http://schemas.microsoft.com/ado/2007/06/edmx\"><edmx:DataServices m:DataServiceVersion=\"2.0\"><Schema Namespace=\"SFOData\"></Schema></edmx:DataServices></edmx:Edmx>"
+        },
+        "batch_for_sfodata": {
+          "description": "Execute OData $batch requests",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "batch": {"type": "string", "description": "Batch request body"}
+            },
+            "required": ["batch"]
+          },
+          "mock_response": {}
+        },
+        "list_employeetime_for_sfodata": {
+          "description": "List employee time records (leave bookings)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "orderby": {"type": "string", "description": "Sort order"},
+              "top": {"type": "string", "description": "Maximum number of results"},
+              "skip": {"type": "string", "description": "Number of results to skip"},
+              "expand": {"type": "string", "description": "Related entities to expand"},
+              "inlinecount": {"type": "string", "description": "Include count in response"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "externalCode": "EMP001-LEAVE-001",
+                "userId": "EMP001",
+                "startDate": "/Date(1735689600000)/",
+                "endDate": "/Date(1735776000000)/",
+                "timeType": "VACATION",
+                "quantityInDays": "1.00",
+                "approvalStatus": "APPROVED",
+                "comment": "Annual leave"
+              },
+              {
+                "externalCode": "EMP001-LEAVE-002",
+                "userId": "EMP001",
+                "startDate": "/Date(1738368000000)/",
+                "endDate": "/Date(1738454400000)/",
+                "timeType": "SICK",
+                "quantityInDays": "1.00",
+                "approvalStatus": "APPROVED",
+                "comment": "Sick leave"
+              }
+            ]
+          }
+        },
+        "get_employeetime_for_sfodata": {
+          "description": "Get a single employee time record by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "externalCode": {"type": "string", "description": "External code of the time record"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "expand": {"type": "string", "description": "Related entities to expand"}
+            },
+            "required": ["externalCode"]
+          },
+          "mock_response": {
+            "externalCode": "EMP001-LEAVE-001",
+            "userId": "EMP001",
+            "startDate": "/Date(1735689600000)/",
+            "endDate": "/Date(1735776000000)/",
+            "timeType": "VACATION",
+            "quantityInDays": "1.00",
+            "approvalStatus": "APPROVED",
+            "comment": "Annual leave"
+          }
+        },
+        "count_employeetime_for_sfodata": {
+          "description": "Count employee time records",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"}
+            },
+            "required": []
+          },
+          "mock_response": 5
+        },
+        "list_timeaccount_for_sfodata": {
+          "description": "List employee leave/time accounts",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "orderby": {"type": "string", "description": "Sort order"},
+              "top": {"type": "string", "description": "Maximum number of results"},
+              "skip": {"type": "string", "description": "Number of results to skip"},
+              "expand": {"type": "string", "description": "Related entities to expand"},
+              "inlinecount": {"type": "string", "description": "Include count"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "externalCode": "EMP001-VA-2025",
+                "userId": "EMP001",
+                "accountType": "VACATION",
+                "bookingStartDate": "/Date(1735689600000)/",
+                "bookingEndDate": "/Date(1767225600000)/",
+                "accountClosed": "false",
+                "startDate": "/Date(1735689600000)/",
+                "endDate": "/Date(1767225600000)/"
+              },
+              {
+                "externalCode": "EMP001-SL-2025",
+                "userId": "EMP001",
+                "accountType": "SICK",
+                "bookingStartDate": "/Date(1735689600000)/",
+                "bookingEndDate": "/Date(1767225600000)/",
+                "accountClosed": "false",
+                "startDate": "/Date(1735689600000)/",
+                "endDate": "/Date(1767225600000)/"
+              }
+            ]
+          }
+        },
+        "get_timeaccount_for_sfodata": {
+          "description": "Get a single time account by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "externalCode": {"type": "string", "description": "Time account external code"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "expand": {"type": "string", "description": "Related entities to expand"}
+            },
+            "required": ["externalCode"]
+          },
+          "mock_response": {
+            "externalCode": "EMP001-VA-2025",
+            "userId": "EMP001",
+            "accountType": "VACATION",
+            "bookingStartDate": "/Date(1735689600000)/",
+            "bookingEndDate": "/Date(1767225600000)/",
+            "accountClosed": "false"
+          }
+        },
+        "count_timeaccount_for_sfodata": {
+          "description": "Count time accounts",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"}
+            },
+            "required": []
+          },
+          "mock_response": 2
+        },
+        "list_timeaccountdetail_for_sfodata": {
+          "description": "List time account details (accrual/deduction entries)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of results"},
+              "skip": {"type": "string", "description": "Number of results to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "externalCode": "EMP001-VA-2025-ACCRUAL",
+                "bookingAmount": "20.00",
+                "bookingUnit": "DAYS",
+                "bookingType": "ACCRUAL",
+                "bookingDate": "/Date(1735689600000)/"
+              }
+            ]
+          }
+        },
+        "get_timeaccountdetail_for_sfodata": {
+          "description": "Get a single time account detail entry",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "TimeAccount_externalCode": {"type": "string", "description": "Parent time account code"},
+              "externalCode": {"type": "string", "description": "Detail entry code"}
+            },
+            "required": ["TimeAccount_externalCode", "externalCode"]
+          },
+          "mock_response": {
+            "externalCode": "EMP001-VA-2025-ACCRUAL",
+            "bookingAmount": "20.00",
+            "bookingUnit": "DAYS",
+            "bookingType": "ACCRUAL",
+            "bookingDate": "/Date(1735689600000)/"
+          }
+        },
+        "count_timeaccountdetail_for_sfodata": {
+          "description": "Count time account details",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"}
+            },
+            "required": []
+          },
+          "mock_response": 3
+        },
+        "list_availabletimetype_for_sfodata": {
+          "description": "List available time types for an employee",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of results"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "externalCode": "VACATION",
+                "timeTypeLabel": "Annual Vacation",
+                "userId": "EMP001"
+              },
+              {
+                "externalCode": "SICK",
+                "timeTypeLabel": "Sick Leave",
+                "userId": "EMP001"
+              },
+              {
+                "externalCode": "PARENTAL",
+                "timeTypeLabel": "Parental Leave",
+                "userId": "EMP001"
+              }
+            ]
+          }
+        },
+        "get_availabletimetype_for_sfodata": {
+          "description": "Get a specific available time type",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "externalCode": {"type": "string", "description": "Time type code"},
+              "select": {"type": "string", "description": "Fields to return"}
+            },
+            "required": ["externalCode"]
+          },
+          "mock_response": {
+            "externalCode": "VACATION",
+            "timeTypeLabel": "Annual Vacation",
+            "userId": "EMP001"
+          }
+        },
+        "count_availabletimetype_for_sfodata": {
+          "description": "Count available time types",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"}
+            },
+            "required": []
+          },
+          "mock_response": 3
+        },
+        "list_timetype_for_sfodata": {
+          "description": "List all time types configured in SuccessFactors",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of results"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "externalCode": "VACATION",
+                "label_en_US": "Annual Vacation",
+                "absenceClass": "ABSENCE",
+                "unitOfTime": "CALENDAR_DAYS"
+              },
+              {
+                "externalCode": "SICK",
+                "label_en_US": "Sick Leave",
+                "absenceClass": "ABSENCE",
+                "unitOfTime": "CALENDAR_DAYS"
+              }
+            ]
+          }
+        },
+        "get_timetype_for_sfodata": {
+          "description": "Get a specific time type by code",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "externalCode": {"type": "string", "description": "Time type code"},
+              "select": {"type": "string", "description": "Fields to return"}
+            },
+            "required": ["externalCode"]
+          },
+          "mock_response": {
+            "externalCode": "VACATION",
+            "label_en_US": "Annual Vacation",
+            "absenceClass": "ABSENCE",
+            "unitOfTime": "CALENDAR_DAYS"
+          }
+        },
+        "count_timetype_for_sfodata": {
+          "description": "Count time types",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"}
+            },
+            "required": []
+          },
+          "mock_response": 5
+        },
+        "list_timetypeprofile_for_sfodata": {
+          "description": "List time type profiles",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "externalCode": "DEFAULT",
+                "label_en_US": "Default Time Type Profile"
+              }
+            ]
+          }
+        },
+        "get_timetypeprofile_for_sfodata": {
+          "description": "Get a specific time type profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "externalCode": {"type": "string", "description": "Profile code"},
+              "select": {"type": "string", "description": "Fields to return"}
+            },
+            "required": ["externalCode"]
+          },
+          "mock_response": {
+            "externalCode": "DEFAULT",
+            "label_en_US": "Default Time Type Profile"
+          }
+        },
+        "count_timetypeprofile_for_sfodata": {
+          "description": "Count time type profiles",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"}
+            },
+            "required": []
+          },
+          "mock_response": 1
+        }
+      }
+    },
+    "sap-sf-balances": {
+      "mcp_server_name": "sap.sf/Balances",
+      "description": "SAP SuccessFactors Time Off Balances REST API",
+      "tools": {
+        "GET_rest_timemanagement_absence_v1_timeAccountBalances": {
+          "description": "Retrieve time account balances for an employee",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {"type": "string", "description": "Employee user ID"},
+              "date": {"type": "string", "description": "Reference date (YYYY-MM-DD)"},
+              "timeTypeCode": {"type": "string", "description": "Filter by time type code"}
+            },
+            "required": ["userId"]
+          },
+          "mock_response": {
+            "results": [
+              {
+                "userId": "EMP001",
+                "timeTypeCode": "VACATION",
+                "balance": "15.00",
+                "unit": "DAYS",
+                "validFrom": "2025-01-01",
+                "validTo": "2025-12-31"
+              },
+              {
+                "userId": "EMP001",
+                "timeTypeCode": "SICK",
+                "balance": "10.00",
+                "unit": "DAYS",
+                "validFrom": "2025-01-01",
+                "validTo": "2025-12-31"
+              }
+            ]
+          }
+        },
+        "GET_rest_timemanagement_absence_v1_timeTypeBalances": {
+          "description": "Retrieve time type balances summary",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {"type": "string", "description": "Employee user ID"},
+              "date": {"type": "string", "description": "Reference date (YYYY-MM-DD)"}
+            },
+            "required": ["userId"]
+          },
+          "mock_response": {
+            "results": [
+              {
+                "userId": "EMP001",
+                "timeTypeCode": "VACATION",
+                "balance": "15.00",
+                "unit": "DAYS"
+              }
+            ]
+          }
+        },
+        "GET_rest_timemanagement_absence_v1_terminationTimeAccountBalance": {
+          "description": "Retrieve termination time account balance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {"type": "string", "description": "Employee user ID"}
+            },
+            "required": ["userId"]
+          },
+          "mock_response": {
+            "userId": "EMP001",
+            "balance": "15.00",
+            "unit": "DAYS"
+          }
+        }
+      }
+    },
+    "sap-sf-availabletimetypes": {
+      "mcp_server_name": "sap.sf/AvailableTimeTypes",
+      "description": "SAP SuccessFactors Available Time Types REST API",
+      "tools": {
+        "GET_rest_timemanagement_absence_v1_availableTimeTypes": {
+          "description": "Retrieve available time types for an employee",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {"type": "string", "description": "Employee user ID"},
+              "date": {"type": "string", "description": "Reference date (YYYY-MM-DD)"}
+            },
+            "required": ["userId"]
+          },
+          "mock_response": {
+            "results": [
+              {
+                "timeTypeCode": "VACATION",
+                "label": "Annual Vacation",
+                "absenceClass": "ABSENCE",
+                "unit": "DAYS",
+                "workflowApprovalRequired": false
+              },
+              {
+                "timeTypeCode": "SICK",
+                "label": "Sick Leave",
+                "absenceClass": "ABSENCE",
+                "unit": "DAYS",
+                "workflowApprovalRequired": false
+              },
+              {
+                "timeTypeCode": "PARENTAL",
+                "label": "Parental Leave",
+                "absenceClass": "ABSENCE",
+                "unit": "DAYS",
+                "workflowApprovalRequired": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "sap-sf-instructionaltext": {
+      "mcp_server_name": "sap.sf/InstructionalText",
+      "description": "SAP SuccessFactors Instructional Text REST API — leave policy text",
+      "tools": {
+        "GET_rest_timemanagement_absence_v1_instructionalTextsForEmployee": {
+          "description": "Retrieve instructional/policy text for leave types applicable to an employee",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {"type": "string", "description": "Employee user ID"},
+              "timeTypeCode": {"type": "string", "description": "Filter by time type code"}
+            },
+            "required": ["userId"]
+          },
+          "mock_response": {
+            "results": [
+              {
+                "timeTypeCode": "VACATION",
+                "instructionalText": "Employees are entitled to 20 working days of annual vacation per calendar year. Vacation must be requested at least 2 weeks in advance and is subject to manager approval. Unused vacation days may be carried over to the following year up to a maximum of 5 days.",
+                "locale": "en_US"
+              },
+              {
+                "timeTypeCode": "SICK",
+                "instructionalText": "Employees may take sick leave when unable to work due to illness or injury. A medical certificate is required for absences longer than 3 consecutive days. Sick leave does not require advance notice but must be reported to your manager on the first day of absence.",
+                "locale": "en_US"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created_for_agent": "hr-leave-agent",
+    "mock_mode": true,
+    "deterministic": true,
+    "total_servers": 4,
+    "total_tools": 20,
+    "generated_from": [
+      "assets/sap-sf-ectimeoff-mcp-server/mcp-translation/translation.json",
+      "assets/sap-sf-balances-mcp-server/mcp-translation/translation.json",
+      "assets/sap-sf-availabletimetypes-mcp-server/mcp-translation/translation.json",
+      "assets/sap-sf-instructionaltext-mcp-server/mcp-translation/translation.json"
+    ],
+    "generation_date": "2026-10-22"
+  }
+}

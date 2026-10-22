@@ -1,0 +1,51 @@
+apiVersion: asset.sap/v1
+kind: Asset
+type: agent
+
+metadata:
+  name: hr-leave-agent
+  description: AI agent that answers employee questions about vacation entitlements, leave balances, and sick leave policies using SAP SuccessFactors data
+  version: "1.0.0"
+
+provides:
+  apis:
+    - name: hr-leave-agent
+      kind: a2a
+      ordId: customer.build:apiResource:hr-virtual-agent-9bb77.hr-leave-agent:v1
+
+container:
+  buildPath: .
+  port: 5000
+
+requires:
+  - name: sap-sf-ectimeoff-mcp-server
+    kind: mcp-server
+    ordId: customer.build:apiResource:hr-virtual-agent-9bb77.sap-sf-ectimeoff-mcp-server:v1
+  - name: sap-sf-balances-mcp-server
+    kind: mcp-server
+    ordId: customer.build:apiResource:hr-virtual-agent-9bb77.sap-sf-balances-mcp-server:v1
+  - name: sap-sf-availabletimetypes-mcp-server
+    kind: mcp-server
+    ordId: customer.build:apiResource:hr-virtual-agent-9bb77.sap-sf-availabletimetypes-mcp-server:v1
+  - name: sap-sf-instructionaltext-mcp-server
+    kind: mcp-server
+    ordId: customer.build:apiResource:hr-virtual-agent-9bb77.sap-sf-instructionaltext-mcp-server:v1
+
+probes:
+  startup:
+    path: /.well-known/agent.json
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 18
+  liveness:
+    path: /.well-known/agent.json
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    path: /.well-known/agent.json
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3

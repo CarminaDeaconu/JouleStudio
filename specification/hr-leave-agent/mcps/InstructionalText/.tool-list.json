@@ -1,0 +1,52 @@
+[
+  {
+    "name": "GET_rest_timemanagement_absence_v1_instructionalTextsForEmployee",
+    "title": "GET_rest_timemanagement_absence_v1_instructionalTextsForEmployeeSelfService",
+    "description": "Gets localized instructional text assigned within the time profile object. This text is supposed to help the employee to correctly request an absence.",
+    "openApiType": {
+      "path": "/rest/timemanagement/absence/v1/instructionalTextsForEmployeeSelfService",
+      "method": "get",
+      "parameters": [
+        {
+          "name": "$at",
+          "description": "The date for which the instructional text is requested. The date must be in the format YYYY-MM-DD.",
+          "in": "query",
+          "newParameterName": "at"
+        }
+      ],
+      "requestBody": {},
+      "responseHeaders": [
+        {
+          "name": "age"
+        },
+        {
+          "name": "cache-control"
+        },
+        {
+          "name": "expires"
+        },
+        {
+          "name": "last-modified"
+        },
+        {
+          "name": "x-request-id"
+        },
+        {
+          "name": "x-correlation-id"
+        },
+        {
+          "name": "content-type"
+        },
+        {
+          "name": "content-encoding"
+        },
+        {
+          "name": "content-language"
+        },
+        {
+          "name": "content-length"
+        }
+      ]
+    }
+  }
+]

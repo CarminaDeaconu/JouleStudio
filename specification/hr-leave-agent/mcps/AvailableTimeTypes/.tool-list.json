@@ -1,0 +1,58 @@
+[
+  {
+    "name": "GET_rest_timemanagement_absence_v1_availableTimeTypes",
+    "title": "GET_rest_timemanagement_absence_v1_availableTimeTypes",
+    "description": "Gets the available time types for the login user. The list is based on the Time Profile assigned to the user in Job Information.",
+    "openApiType": {
+      "path": "/rest/timemanagement/absence/v1/availableTimeTypes",
+      "method": "get",
+      "parameters": [
+        {
+          "name": "$at",
+          "description": "The date for which the available time types are requested. The date must be in the format YYYY-MM-DD.",
+          "in": "query",
+          "newParameterName": "at"
+        },
+        {
+          "name": "absenceRequestCode",
+          "description": "The external code of an existing absence which is used to filter the list of available time type.",
+          "in": "query",
+          "newParameterName": "absencerequestcode"
+        }
+      ],
+      "requestBody": {},
+      "responseHeaders": [
+        {
+          "name": "age"
+        },
+        {
+          "name": "cache-control"
+        },
+        {
+          "name": "expires"
+        },
+        {
+          "name": "last-modified"
+        },
+        {
+          "name": "x-request-id"
+        },
+        {
+          "name": "x-correlation-id"
+        },
+        {
+          "name": "content-type"
+        },
+        {
+          "name": "content-encoding"
+        },
+        {
+          "name": "content-language"
+        },
+        {
+          "name": "content-length"
+        }
+      ]
+    }
+  }
+]

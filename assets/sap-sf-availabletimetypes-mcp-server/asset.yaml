@@ -1,0 +1,21 @@
+apiVersion: asset.sap/v1
+kind: Asset
+type: mcp-server
+
+metadata:
+  name: sap-sf-availabletimetypes-mcp-server
+  description: Exposes SAP SuccessFactors Available Time Types REST API as MCP tools
+  version: "1.0.0"
+  translation: mcp-translation/translation.json
+  apiSpec: mcp-translation/api-spec.json
+
+requires:
+  - name: AvailableTimeTypes
+    kind: api
+    ordId: sap.sf:apiResource:AvailableTimeTypes:v1
+
+provides:
+  apis:
+    - name: sap-sf-availabletimetypes-mcp-server
+      kind: mcp-server
+      ordId: customer.build:apiResource:hr-virtual-agent-9bb77.sap-sf-availabletimetypes-mcp-server:v1

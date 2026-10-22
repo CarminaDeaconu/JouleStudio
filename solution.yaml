@@ -1,0 +1,14 @@
+apiVersion: solution.sap/v1
+kind: Solution
+
+metadata:
+  name: hr-virtual-agent-9bb77
+  version: "1.0.0"
+  description: HR AI agent that answers employee questions about vacation and sick leave using SAP SuccessFactors data
+
+assets:
+  - ref: ./assets/hr-leave-agent/asset.yaml
+  - ref: ./assets/sap-sf-ectimeoff-mcp-server/asset.yaml
+  - ref: ./assets/sap-sf-balances-mcp-server/asset.yaml
+  - ref: ./assets/sap-sf-availabletimetypes-mcp-server/asset.yaml
+  - ref: ./assets/sap-sf-instructionaltext-mcp-server/asset.yaml
